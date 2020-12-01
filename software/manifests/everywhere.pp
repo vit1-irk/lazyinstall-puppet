@@ -1,11 +1,11 @@
 class software::everywhere {
     case $facts['os']['name'] { 'Debian': { 
         if $facts['os']['distro']['codename'] == 'buster' {
-            file { '/etc/apt/sources.list.d/mybackport':
+            file { '/etc/apt/sources.list.d/mybackport.list':
                 ensure => present,
                 content => "deb http://deb.debian.org/debian buster-backports main",
-                mode => 755
-            }
+                mode => "0755"
+            } -> exec { 'Update package list': command  => 'apt-get update' }
         }
     }}
 
@@ -22,7 +22,7 @@ class software::everywhere {
 		manjarolinux => $pkgs_arch
 	}
 
-	package { $pkgs_common: ensure => "latest" }
-	package { $pkgs_custom: ensure => "latest" }
+	package { $pkgs_common: ensure => "present" }
+	package { $pkgs_custom: ensure => "present" }
 	package { $pkgs_uninst: ensure => "absent" }
 }
