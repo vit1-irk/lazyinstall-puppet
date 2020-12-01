@@ -1,5 +1,5 @@
 class software::server {
-	$pkgs = ['letsencrypt', 'certbot', 'nginx', 'fail2ban', 'emacs-nox']
+	$pkgs = ['letsencrypt', 'certbot', 'nginx', 'fail2ban', 'emacs-nox', 'tcpdump']
 	$pkgs_uninst = ['apache2-bin', 'apache2-utils']
     
 	package { $pkgs: ensure => "installed" }
