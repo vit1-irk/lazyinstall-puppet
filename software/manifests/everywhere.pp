@@ -5,7 +5,7 @@ class software::everywhere {
                 ensure => present,
                 content => "deb http://deb.debian.org/debian buster-backports main",
                 mode => "0755"
-            } -> exec { 'Update package list': command  => 'apt-get update' }
+            } -> exec { 'Update package list': command  => '/usr/bin/apt update' }
         }
     }}
 
