@@ -5,11 +5,11 @@ class software::science {
     # LaTeX - important
     # helioviewer-client + java - ?
 
-	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'xmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker']
+	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'xmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker',   'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
     
-	$pkgs_debbased = ['gnuplot-qt', 'gnuplot-x11', 'saods9', 'gnudatalanguage', 'r-base', 'r-recommended', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'texlive-full']
+	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'r-base', 'r-recommended', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek']
     
-	$pkgs_arch = ['r', 'texlive-bibtexextra', 'texlive-bin', 'texlive-core', 'texlive-fontsextra', 'texlive-formatsextra', 'texlive-humanities', 'texlive-langcyrillic', 'texlive-langextra', 'texlive-langgreek', 'texlive-latexextra', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
+	$pkgs_arch = ['r', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
     $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep']
     
