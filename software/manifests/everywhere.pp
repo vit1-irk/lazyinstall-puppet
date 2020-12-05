@@ -4,7 +4,7 @@ class software::everywhere {
         if $facts['os']['distro']['codename'] == 'buster' {
             file { '/etc/apt/sources.list.d/mybackport.list':
                 ensure => present,
-                content => "deb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb http://deb.debian.org/debian buster main contrib non-free",
+                content => "deb http://deb.debian.org/debian buster-backports main contrib non-free\ndeb http://deb.debian.org/debian buster contrib non-free",
                 mode => "0755"
             } -> exec { 'Update package list': command  => '/usr/bin/apt update' }
         }
