@@ -27,7 +27,7 @@ class software::science {
 	package { $pkgs_uninst: ensure => "absent" }
     
     package { $pip_packages: ensure => 'latest', provider => 'pip3' }
-    package { 'ipywidgets': ensure => 'latest', provider => 'pip3' } -> exec { 'enable jupyter extension': command => '/usr/local/bin/jupyter nbextension enable --py widgetsnbextension' } -> exec { 'install jupyterlab extension': command => '/usr/local/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager' }
+    package { 'ipywidgets': ensure => 'latest', provider => 'pip3' } -> exec { 'enable jupyter extension': command => '/usr/local/bin/jupyter nbextension enable --py widgetsnbextension' } -> exec { 'install jupyterlab extension': command => '/usr/local/bin/jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' } -> exec {'jupyter lab build without minimize', command => '/usr/local/bin/jupyter lab build --minimize=False'}
     
     package { 'dot_kernel': ensure => 'latest', provider => 'pip3' } -> exec { 'install dot kernel': command  => '/usr/local/bin/install-dot-kernel' } -> exec { 'install for user': command  => '/usr/local/bin/install-dot-kernel', user => $user }
 }
