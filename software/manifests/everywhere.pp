@@ -1,17 +1,18 @@
 class software::everywhere {
+    # non-free repo is needed to install broadcom wifi drivers
     case $facts['os']['name'] { 'Debian': { 
         if $facts['os']['distro']['codename'] == 'buster' {
             file { '/etc/apt/sources.list.d/mybackport.list':
                 ensure => present,
-                content => "deb http://deb.debian.org/debian buster-backports main",
+                content => "deb http://deb.debian.org/debian buster-backports main non-free",
                 mode => "0755"
             } -> exec { 'Update package list': command  => '/usr/bin/apt update' }
         }
     }}
 
-	$pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'parallel', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'wireguard-dkms', 'wireguard-tools', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof']
-	$pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'wireguard', 'xz-utils', 'apt-file']
-	$pkgs_arch = ['base-devel', 'cronie', 'openssh', 'python-pip', 'xz']
+	$pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'parallel', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'wireguard-dkms', 'wireguard-tools', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof', 'zsh']
+	$pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'wireguard', 'xz-utils', 'apt-file', 'wcalc', 'unrar-free']
+	$pkgs_arch = ['base-devel', 'cronie', 'openssh', 'python-pip', 'xz', 'calc', 'unrar']
 
 	$pkgs_uninst = []
 
