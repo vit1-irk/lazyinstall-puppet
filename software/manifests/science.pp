@@ -3,11 +3,14 @@ class software::science {
     # ds9 on Arch - ?, install AUR packages
     # R, jupyter module, arch package
     # LaTeX - important
+    # helioviewer-client + java - ?
 
-	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'xmaxima', 'graphviz', 'x2goserver', 'npm']
+	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'xmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker']
     
-	$pkgs_debbased = ['gnuplot-qt', 'gnuplot-x11', 'saods9', 'gnudatalanguage', 'r-base', 'r-recommended', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin']
-	$pkgs_arch = ['r']
+	$pkgs_debbased = ['gnuplot-qt', 'gnuplot-x11', 'saods9', 'gnudatalanguage', 'r-base', 'r-recommended', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'texlive-full']
+    
+	$pkgs_arch = ['r', 'texlive-bibtexextra', 'texlive-bin', 'texlive-core', 'texlive-fontsextra', 'texlive-formatsextra', 'texlive-humanities', 'texlive-langcyrillic', 'texlive-langextra', 'texlive-langgreek', 'texlive-latexextra', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
+    
     $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep']
     
     $pkgs_uninst = []
