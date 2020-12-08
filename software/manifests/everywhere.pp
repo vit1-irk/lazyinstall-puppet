@@ -8,8 +8,6 @@ class software::everywhere {
                 mode => "0755"
             } -> exec { 'Update package list': command  => '/usr/bin/apt update' }
         }
-    }, 'Archlinux': {
-        include software::yaourt
     }}
 
 	$pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'parallel', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'wireguard-dkms', 'wireguard-tools', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof', 'zsh', 'unrar']
