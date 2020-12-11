@@ -8,7 +8,7 @@ class software::archlinuxcn {
 
   file_line {'cnrepo':
     ensure  => present,
-    content => "[archlinuxcn]\nServer = http://repo.archlinuxcn.org/\$arch",
+    line => "[archlinuxcn]\nServer = http://repo.archlinuxcn.org/\$arch",
     notify  => Exec['pacman_sync'],
     path    => '/etc/pacman.conf'
   }
