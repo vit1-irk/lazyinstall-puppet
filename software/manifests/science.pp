@@ -33,21 +33,22 @@ class software::science {
     exec { 'jupyter-ipywidgets': path => $all_path,
         command => 'jupyter nbextension enable --py widgetsnbextension',
         refreshonly => true,
-        require => Package['ipywidgets']}
-    exec { 'jupyterlab-ipywidgets': path => $all_path,
-        command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build',
-        subscribe => Exec['jupyter-ipywidgets']}
-    exec {'jupyter lab build without minimize': path => $all_path,
-        subscribe => Exec['jupyterlab-ipywidgets'],
+        subscribe => Package['ipywidgets']}
+    ~> exec { 'jupyterlab-ipywidgets': path => $all_path,
+        refreshonly => true,
+        command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build'}
+    ~> exec {'jupyter lab build without minimize': path => $all_path,
+        refreshonly => true,
         command => 'jupyter lab build --minimize=False' }
     
     
     exec { 'install dot kernel': path => $all_path,
-        require => Package['dot_kernel'],
+        subscribe   => Package['dot_kernel'],
         refreshonly => true,
         command  => 'install-dot-kernel' }
-    exec { 'install for user': path => $all_path,
+    ~> exec { 'install for user': path => $all_path,
         subscribe => Exec['install dot kernel'],
+        refreshonly => true,
         command  => 'install-dot-kernel',
         user => $user }
 }
