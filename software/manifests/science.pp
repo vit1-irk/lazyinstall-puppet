@@ -11,7 +11,7 @@ class software::science {
     
 	$pkgs_arch = ['r', 'ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
-    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep']
+    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'ipywidgets', 'dot_kernel']
     
     $pkgs_uninst = []
 
@@ -29,8 +29,25 @@ class software::science {
     package { $pip_packages: ensure => 'installed', provider => 'pip3' }
     
     $all_path = '/usr/local/bin/:/usr/bin'
+        
+    exec { 'jupyter-ipywidgets': path => $all_path,
+        command => 'jupyter nbextension enable --py widgetsnbextension',
+        refreshonly => true,
+        require => Package['ipywidgets']}
+    exec { 'jupyterlab-ipywidgets': path => $all_path,
+        command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build',
+        subscribe => Exec['jupyter-ipywidgets']}
+    exec {'jupyter lab build without minimize': path => $all_path,
+        subscribe => Exec['jupyterlab-ipywidgets'],
+        command => 'jupyter lab build --minimize=False' }
     
-    package { 'ipywidgets': ensure => 'installed', provider => 'pip3' } -> exec { 'enable jupyter extension': path => $all_path, command => 'jupyter nbextension enable --py widgetsnbextension' } -> exec { 'install jupyterlab extension': path => $all_path, command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' } -> exec {'jupyter lab build without minimize': path => $all_path, command => 'jupyter lab build --minimize=False'}
     
-    package { 'dot_kernel': ensure => 'installed', provider => 'pip3' } -> exec { 'install dot kernel': path => $all_path, command  => 'install-dot-kernel' } -> exec { 'install for user': path => $all_path, command  => 'install-dot-kernel', user => $user }
+    exec { 'install dot kernel': path => $all_path,
+        require => Package['dot_kernel'],
+        refreshonly => true,
+        command  => 'install-dot-kernel' }
+    exec { 'install for user': path => $all_path,
+        subscribe => Exec['install dot kernel'],
+        command  => 'install-dot-kernel',
+        user => $user }
 }
