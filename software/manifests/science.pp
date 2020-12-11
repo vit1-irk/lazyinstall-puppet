@@ -26,11 +26,11 @@ class software::science {
 	package { $pkgs_custom: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
     
-    package { $pip_packages: ensure => 'latest', provider => 'pip3' }
+    package { $pip_packages: ensure => 'installed', provider => 'pip3' }
     
     $all_path = '/usr/local/bin/:/usr/bin'
     
-    package { 'ipywidgets': ensure => 'latest', provider => 'pip3' } -> exec { 'enable jupyter extension': path => $all_path, command => 'jupyter nbextension enable --py widgetsnbextension' } -> exec { 'install jupyterlab extension': path => $all_path, command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' } -> exec {'jupyter lab build without minimize': path => $all_path, command => 'jupyter lab build --minimize=False'}
+    package { 'ipywidgets': ensure => 'installed', provider => 'pip3' } -> exec { 'enable jupyter extension': path => $all_path, command => 'jupyter nbextension enable --py widgetsnbextension' } -> exec { 'install jupyterlab extension': path => $all_path, command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' } -> exec {'jupyter lab build without minimize': path => $all_path, command => 'jupyter lab build --minimize=False'}
     
-    package { 'dot_kernel': ensure => 'latest', provider => 'pip3' } -> exec { 'install dot kernel': path => $all_path, command  => 'install-dot-kernel' } -> exec { 'install for user': path => $all_path, command  => 'install-dot-kernel', user => $user }
+    package { 'dot_kernel': ensure => 'installed', provider => 'pip3' } -> exec { 'install dot kernel': path => $all_path, command  => 'install-dot-kernel' } -> exec { 'install for user': path => $all_path, command  => 'install-dot-kernel', user => $user }
 }
