@@ -1,10 +1,9 @@
 class software::science {
     $user = 'vitya'
-    # ds9 on Arch - ?, install AUR packages
     # R, jupyter module, arch package
-    # LaTeX - important
-    # helioviewer-client + java - ?
+    # JHelioviewer + java - ?
     # https://github.com/wlandsman/IDLAstro
+    # GDL on archlinux?
 
 	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker',   'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
     
