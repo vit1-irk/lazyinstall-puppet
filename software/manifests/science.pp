@@ -1,9 +1,9 @@
 class software::science {
     $user = 'vitya'
-    # R, jupyter module, arch package
+    # R, jupyter module
     # JHelioviewer + java - ?
     # https://github.com/wlandsman/IDLAstro
-    # GDL on archlinux?
+    # GDL on archlinux + GDL-kernel
 
 	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker',   'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
     
