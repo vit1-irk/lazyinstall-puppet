@@ -34,7 +34,7 @@ class software::desktop {
     package { $pkgs_debflavor: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
     
-    service {
+    service { 'Syncthing':
         name => "syncthing@vitya",
         ensure => "running",
         enable => "true"
