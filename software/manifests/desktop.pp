@@ -33,7 +33,19 @@ class software::desktop {
 	package { $pkgs_custom: ensure => "installed" }
     package { $pkgs_debflavor: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
-    
+
+    file { '/etc/xdg/autostart/nextcloud-client.desktop':
+        ensure => present,
+        source => "puppet://desktop-entries/nextcloud-client.desktop",
+        mode => "0644"
+    }
+
+    file { '/etc/xdg/autostart/kdeconnect-indicator.desktop':
+        ensure => present,
+        source => "puppet://desktop-entries/kdeconnect-indicator.desktop",
+        mode => "0644"
+    }
+
     service { 'Syncthing':
         name => "syncthing@vitya",
         ensure => "running",
