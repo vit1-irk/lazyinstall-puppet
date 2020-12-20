@@ -36,13 +36,13 @@ class software::desktop {
 
     file { '/etc/xdg/autostart/nextcloud-client.desktop':
         ensure => present,
-        source => "puppet://desktop-entries/nextcloud-client.desktop",
+        content => file('software/nextcloud-client.desktop'),
         mode => "0644"
     }
 
     file { '/etc/xdg/autostart/kdeconnect-indicator.desktop':
         ensure => present,
-        source => "puppet://desktop-entries/kdeconnect-indicator.desktop",
+        content => file('software/kdeconnect-indicator.desktop'),
         mode => "0644"
     }
 
