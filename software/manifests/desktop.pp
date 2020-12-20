@@ -5,7 +5,7 @@ class software::desktop {
     # plasma-browser-integration, plasma-pa, kcm-wacomtablet
 	# camptocamp-systemd puppet module
 
-	$pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'mousepad', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct']
+	$pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct']
 
 	$pkgs_debbased = ['exfat-fuse', 'fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'pulseaudio-module-bluetooth', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms']
 
@@ -14,7 +14,7 @@ class software::desktop {
     $pkgs_debian = ['bluez-firmware', 'firefox-esr', 'firefox-esr-l10n-ru', 'thunderbird-l10n-ru']
     $pkgs_ubuntu = ['firefox', 'firefox-locale-ru', 'thunderbird-locale-ru']
     
-	$pkgs_uninst = ['mc']
+	$pkgs_uninst = ['mc', 'mousepad', 'leafpad']
 
 	$pkgs_custom = $operatingsystem ? {
 		debian => $pkgs_debbased,
@@ -33,4 +33,10 @@ class software::desktop {
 	package { $pkgs_custom: ensure => "installed" }
     package { $pkgs_debflavor: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
+    
+    service {
+        name => "syncthing@vitya",
+        ensure => "running",
+        enable => "true"
+    }
 }
