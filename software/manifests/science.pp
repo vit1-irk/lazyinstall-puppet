@@ -1,5 +1,4 @@
 class software::science {
-    $user = 'vitya'
     # R, jupyter module
     # JHelioviewer + java - ?
     # https://github.com/wlandsman/IDLAstro
@@ -46,9 +45,4 @@ class software::science {
         subscribe   => Package['dot_kernel'],
         refreshonly => true,
         command  => 'install-dot-kernel' }
-    ~> exec { 'install for user': path => $all_path,
-        subscribe => Exec['install dot kernel'],
-        refreshonly => true,
-        command  => 'install-dot-kernel',
-        user => $user }
 }

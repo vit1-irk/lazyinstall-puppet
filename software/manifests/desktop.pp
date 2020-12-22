@@ -1,9 +1,9 @@
 class software::desktop {
-	# fonts are questionable, office, libfsapfs-utils, mypaint
+    # fonts are questionable, office, libfsapfs-utils, mypaint
     # zsh config?
     # onlyoffice-desktopeditors
     # plasma-browser-integration, plasma-pa, kcm-wacomtablet
-	# camptocamp-systemd puppet module
+    # camptocamp-systemd puppet module
 
 	$pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct']
 
@@ -44,11 +44,5 @@ class software::desktop {
         ensure => present,
         content => file('software/kdeconnect-indicator.desktop'),
         mode => "0644"
-    }
-
-    service { 'Syncthing':
-        name => "syncthing@vitya",
-        ensure => "running",
-        enable => "true"
     }
 }
