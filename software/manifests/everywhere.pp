@@ -1,4 +1,10 @@
 class software::everywhere {
+    class { 'timezone': timezone => 'Asia/Irkutsk'}
+    class { 'locales':
+        default_locale  => 'ru_RU.UTF-8',
+        locales         => ['en_US.UTF-8 UTF-8', 'ru_RU.UTF-8 UTF-8'],
+    }
+
     # non-free repo is needed to install broadcom wifi drivers and unrar
     case $facts['os']['name'] { 'Debian': { 
         if $facts['os']['distro']['codename'] == 'buster' {
