@@ -1,7 +1,6 @@
 class software::science {
     # R, jupyter module
     # JHelioviewer + java - ?
-    # https://github.com/wlandsman/IDLAstro
     # GDL on archlinux + GDL-kernel
 
 	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker',   'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
@@ -26,6 +25,12 @@ class software::science {
 	package { $pkgs_uninst: ensure => "absent" }
     
     package { $pip_packages: ensure => 'installed', provider => 'pip3' }
+    
+    vcsrepo { "/opt/IDLAstro":
+        ensure   => present,
+        provider => "git",
+        source   => "https://github.com/wlandsman/IDLAstro"
+    }
     
     $all_path = '/usr/local/bin/:/usr/bin'
         
