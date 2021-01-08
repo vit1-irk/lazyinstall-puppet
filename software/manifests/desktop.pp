@@ -45,4 +45,20 @@ class software::desktop {
         content => file('software/kdeconnect-indicator.desktop'),
         mode => "0644"
     }
+
+    if $facts['boardmanufacturer'] == "Apple Inc." {
+        # Touchpad and fan configs for Macbook Air (macfanctld and xf86-input-mtrack needed)
+
+        file { '/etc/macfanctl.conf':
+            ensure => present,
+            content => file('software/macfanctl.conf'),
+            mode => "0644"
+        }
+
+        file { '/etc/X11/xorg.conf.d/10-mtrack.conf':
+            ensure => present,
+            content => file('software/10-mtrack.conf'),
+            mode => "0644"
+        }
+    }
 }
