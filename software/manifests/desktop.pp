@@ -1,10 +1,4 @@
 class software::desktop {
-    # fonts are questionable, office, libfsapfs-utils, mypaint
-    # zsh config?
-    # onlyoffice-desktopeditors
-    # plasma-browser-integration, plasma-pa, kcm-wacomtablet
-    # camptocamp-systemd puppet module
-
 	$pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'telegram-desktop', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct']
 
 	$pkgs_debbased = ['exfat-fuse', 'fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'pulseaudio-module-bluetooth', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms']
