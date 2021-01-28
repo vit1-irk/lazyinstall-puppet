@@ -6,7 +6,7 @@ class software::science {
     
 	$pkgs_arch = ['r', 'ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
-    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel']
+    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'ipyleaflet', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel']
     
     $pkgs_uninst = []
 
@@ -30,7 +30,8 @@ class software::science {
     }
     
     $all_path = '/usr/local/bin/:/usr/bin'
-        
+    
+    # maybe remove it
     exec { 'jupyter-ipywidgets': path => $all_path,
         command => 'jupyter nbextension enable --py widgetsnbextension',
         refreshonly => true,
