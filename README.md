@@ -29,7 +29,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
-    - Рендеринг геоинформационного контента на Jupyter (ipyleaflet)
     - [LaTeX для Jupyter](https://github.com/jupyterlab/jupyterlab-latex)
     - Может быть, JupyterLab-github?
 
@@ -37,6 +36,7 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
     - Решение: [fdroidcl](https://github.com/mvdan/fdroidcl) + экспорт избранных в Aurora Store
     - OandBackupX?
 
+- Хочу везде запустить crontab-скрипт раз в 3 дня, который удаляет скриншоты и загрузки
 - В matplotlib 3.2 есть баг, который не позволяет нормально строить графики с временными рядами. Решение: используем matplotlib 3.1.2. Но по-хорошему надо связаться с разработчиками или подождать свежего релиза
 
 - GDL-kernel в Арче работает только в отдельном окне (проблема не решена)
