@@ -30,7 +30,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
     - [LaTeX для Jupyter](https://github.com/jupyterlab/jupyterlab-latex)
-    - Может быть, JupyterLab-github?
 
 - **Хочу скрипты настройки Android**
     - Решение: [fdroidcl](https://github.com/mvdan/fdroidcl) + экспорт избранных в Aurora Store
