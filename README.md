@@ -21,6 +21,7 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 ### Будущие доработки и текущие проблемы:
 
 - **Серверный пак**
+    - **Wireguard**
     - для связки Nginx + Jupyter
     - для Postgresql + Nextcloud
     - создание домашнего каталога юзеру
@@ -34,6 +35,9 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 - **Хочу скрипты настройки Android**
     - Решение: [fdroidcl](https://github.com/mvdan/fdroidcl) + экспорт избранных в Aurora Store
     - OandBackupX?
+
+- **Eyecandy**
+    - Fira Sans и Fira Mono в deb-based дистрибутивах
 
 - Хочу везде запустить crontab-скрипт раз в 3 дня, который удаляет скриншоты и загрузки
 - В matplotlib 3.2 есть баг, который не позволяет нормально строить графики с временными рядами. Решение: используем matplotlib 3.1.2. Но по-хорошему надо связаться с разработчиками или подождать свежего релиза
