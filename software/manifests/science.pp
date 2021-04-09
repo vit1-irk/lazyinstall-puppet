@@ -51,4 +51,16 @@ class software::science {
         subscribe   => Package['dot_kernel'],
         refreshonly => true,
         command  => 'install-dot-kernel' }
+
+    file { '/etc/R-packages.txt':
+        ensure => present,
+        content => file('software/R-packages.txt'),
+        mode => "0644"
+    }
+
+    exec { 'install R packages': path => $all_path,
+        subscribe   => [Package['r'], Package['r-recommended']],
+        require => File['/etc/R-packages.txt'],
+        refreshonly => true,
+        command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
 }

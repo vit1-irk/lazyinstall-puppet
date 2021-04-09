@@ -1,0 +1,5 @@
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'devtools', 'uuid', 'digest'))
+install.packages('IRkernel')
+IRkernel::installspec(user=FALSE)
+q(save="no")
