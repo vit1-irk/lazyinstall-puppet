@@ -1,5 +1,5 @@
 class software::science {
-    $R_pkgs = $operatingsystem ? {
+    $rpkgs = $operatingsystem ? {
         debian => ['r-base', 'r-recommended'],
         ubuntu => ['r-base', 'r-recommended'],
         archlinux => ['r'],
@@ -24,7 +24,7 @@ class software::science {
 	}
 
     package { $pkgs_common: ensure => "installed" }
-    package { $R_pkgs: ensure => "installed" }
+    package { $rpkgs: ensure => "installed" }
 	package { $pkgs_custom: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
     
@@ -66,7 +66,7 @@ class software::science {
     }
 
     exec { 'install R packages': path => $all_path,
-        subscribe   => $R_pkgs,
+        subscribe   => $rpkgs,
         require => File['/etc/R-packages.txt'],
         refreshonly => true,
         command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
