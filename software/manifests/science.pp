@@ -1,10 +1,16 @@
 class software::science {
-
+    $R_pkgs = $operatingsystem ? {
+        debian => ['r-base', 'r-recommended'],
+        ubuntu => ['r-base', 'r-recommended'],
+        archlinux => ['r'],
+        manjarolinux => ['r']
+    }
+    
 	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'wxmaxima', 'graphviz', 'x2goserver', 'npm', 'texmaker',   'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science']
     
-	$pkgs_debbased = ['xmaxima', 'gnuplot-qt', 'saods9', 'gnudatalanguage', 'r-base', 'r-recommended', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek']
+	$pkgs_debbased = ['xmaxima', 'gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek']
     
-	$pkgs_arch = ['r', 'ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
+	$pkgs_arch = ['ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
     $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'ipyleaflet', 'voila', 'voila-gridstack', 'papermill', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel']
     
@@ -18,6 +24,7 @@ class software::science {
 	}
 
     package { $pkgs_common: ensure => "installed" }
+    package { $R_pkgs: ensure => "installed" }
 	package { $pkgs_custom: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
     
@@ -59,7 +66,7 @@ class software::science {
     }
 
     exec { 'install R packages': path => $all_path,
-        subscribe   => [Package['r'], Package['r-recommended']],
+        subscribe   => $R_pkgs,
         require => File['/etc/R-packages.txt'],
         refreshonly => true,
         command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
