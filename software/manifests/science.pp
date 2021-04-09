@@ -66,8 +66,9 @@ class software::science {
     }
 
     exec { 'install R packages': path => $all_path,
-        subscribe   => $rpkgs,
+        subscribe   => Package[$rpkgs],
         require => File['/etc/R-packages.txt'],
+        timeout => 800,
         refreshonly => true,
         command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
 }
