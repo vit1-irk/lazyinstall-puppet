@@ -21,7 +21,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 ### Будущие доработки и текущие проблемы:
 
 - **Серверный пак**
-    - **Wireguard**
     - для связки Nginx + Jupyter
     - для Postgresql + Nextcloud
     - создание домашнего каталога юзеру
@@ -30,7 +29,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
-    - [LaTeX для Jupyter](https://github.com/jupyterlab/jupyterlab-latex)
 
 - **Хочу скрипты настройки Android**
     - Решение: [fdroidcl](https://github.com/mvdan/fdroidcl) + экспорт избранных в Aurora Store

@@ -12,7 +12,7 @@ class software::science {
     
 	$pkgs_arch = ['ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
-    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'ipyleaflet', 'voila', 'voila-gridstack', 'papermill', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel']
+    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'ipyleaflet', 'voila', 'voila-gridstack', 'papermill', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel', 'jupyterlab_latex']
     
     $pkgs_uninst = []
 
@@ -46,9 +46,15 @@ class software::science {
     ~> exec { 'jupyterlab-ipywidgets': path => $all_path,
         refreshonly => true,
         command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' }
+    ~> exec { 'jupyterlab-latex': path => $all_path,
+        refreshonly => true,
+        command => 'jupyter labextension install @jupyterlab/latex --no-build' }
     ~> exec { 'voila enable serverextension': path => $all_path,
-    	refreshonly => true,
-	command => 'jupyter serverextension enable voila --sys-prefix' }
+        refreshonly => true,
+        command => 'jupyter serverextension enable voila --sys-prefix' }
+    ~> exec { 'jupyterlab_latex enable serverextension': path => $all_path,
+        refreshonly => true,
+        command => 'jupyter serverextension enable jupyterlab_latex --sys-prefix' }
     ~> exec {'jupyter lab build without minimize': path => $all_path,
         refreshonly => true,
         command => 'jupyter lab build --minimize=False' }
