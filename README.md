@@ -8,6 +8,10 @@ sudo ./zaebis.sh science
 
 `zaebis.sh` с ключами `server` или `desktop` запускает Puppet для моих личных десктопных или серверных конфигураций. Тестирование проводилось на Debian Buster (10), Ubuntu 20.10 и ArchLinux (+Manjaro).
 
+Ключ `test` в качестве второго параметра игнорирует обновление репозитория через `git pull`
+
+Включаем basic auth для Nginx: `sudo htpasswd -c /etc/nginx/.htpasswd username`
+
 ### Пакеты в AUR в дополнение к репозиторию
 
 JHelioviewer 4 (пререлиз): <https://aur.archlinux.org/packages/jhelioviewer4-bin/>
@@ -21,11 +25,8 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 ### Будущие доработки и текущие проблемы:
 
 - **Серверный пак**
-    - для связки Nginx + Jupyter
     - для Postgresql + Nextcloud
     - создание домашнего каталога юзеру
-    - предусмотреть отдельный конфиг для Hetzner Cloud
-    - желательно полностью чистить sources.list на Debian (за исключением Hetzner)
 
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
