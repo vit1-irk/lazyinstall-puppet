@@ -2,7 +2,7 @@ class software::everywhere {
     class { 'timezone': timezone => 'Asia/Irkutsk'}
     class { 'locales':
         default_locale  => 'ru_RU.UTF-8',
-        locales         => ['en_US.UTF-8 UTF-8', 'ru_RU.UTF-8 UTF-8'],
+        locales         => ['en_US.UTF-8 UTF-8', 'ru_RU.UTF-8 UTF-8']
     }
 
     # non-free repo is needed to install broadcom wifi drivers and unrar
@@ -35,24 +35,30 @@ class software::everywhere {
     package { $pkgs_common: ensure => "present" }
     package { $pkgs_custom: ensure => "present" }
     package { $pkgs_uninst: ensure => "absent" }
-    
+
+    file { '/usr/bin/checkmemory.sh':
+        ensure => present,
+        mode => "0755",
+        content => file('software/checkmemory.sh')
+    }
+
     file { '/usr/bin/easy-wg-quick':
         ensure => present,
         mode => "0755",
         source => 'https://raw.githubusercontent.com/burghardt/easy-wg-quick/master/easy-wg-quick'
     }
 
-    if $facts['dmi']['board']['product'] == "M3A" {
-        file { '/etc/systemd/system/m3a-usbfix.service':
-            ensure => present,
-            mode => "0644",
-            content => file('software/m3a-usbfix.service')
-        }
-        service { 'm3a-usbfix':
-            name => "m3a-usbfix",
-            ensure => "running",
-            enable => "true",
-            require => File['/etc/systemd/system/m3a-usbfix.service']
-        }
-    }
+    #if $facts['dmi']['board']['product'] == "M3A" {
+    #    file { '/etc/systemd/system/m3a-usbfix.service':
+    #        ensure => present,
+    #        mode => "0644",
+    #        content => file('software/m3a-usbfix.service')
+    #    }
+    #    service { 'm3a-usbfix':
+    #        name => "m3a-usbfix",
+    #        ensure => "running",
+    #        enable => "true",
+    #        require => File['/etc/systemd/system/m3a-usbfix.service']
+    #    }
+    #}
 }

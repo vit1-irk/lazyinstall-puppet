@@ -20,9 +20,10 @@ if [ -n "`which apt-get`" ]; then
         export PATH=$PATH:/opt/puppetlabs/bin
 elif [ -n "`which pacman`" ]; then pacman -Sy --needed --noconfirm git puppet; fi
 
-if git rev-parse --git-dir > /dev/null 2>&1; then
+if [ -d ".git" ]; then
     echo "we are inside git repo"
 else
+    echo $?
     echo "we are not inside git repo, clone and CD"
     git clone https://github.com/vit1-irk/lazyinstall-puppet
     cd lazyinstall-puppet
