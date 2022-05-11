@@ -37,14 +37,16 @@ fi
 
 ./puppet-module.sh
 
+puppetpath=".:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules:/etc/puppet/code/modules"
+
 if [ "$1" = "desktop" ]; then
-        puppet apply --modulepath=".:/etc/puppetlabs/code/modules:/etc/puppet/code/modules" desktop.pp
+        puppet apply --modulepath="$puppetpath" desktop.pp
 fi
 
 if [ "$1" = "server" ]; then
-        puppet apply --modulepath=".:/etc/puppetlabs/code/modules:/etc/puppet/code/modules" server.pp
+        puppet apply --modulepath="$puppetpath" server.pp
 fi
 
 if [ "$1" = "science" ]; then
-        puppet apply --modulepath=".:/etc/puppetlabs/code/modules:/etc/puppet/code/modules" science.pp
+        puppet apply --modulepath="$puppetpath" science.pp
 fi
