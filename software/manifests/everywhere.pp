@@ -47,6 +47,13 @@ class software::everywhere {
         mode => "0755",
         source => 'https://raw.githubusercontent.com/burghardt/easy-wg-quick/master/easy-wg-quick'
     }
+    
+    file { '/etc/resolv.conf':
+        ensure => present,
+        mode => "0755",
+        content => "nameserver 8.8.8.8",
+        require => Package['resolvconf']
+    }
 
     #if $facts['dmi']['board']['product'] == "M3A" {
     #    file { '/etc/systemd/system/m3a-usbfix.service':

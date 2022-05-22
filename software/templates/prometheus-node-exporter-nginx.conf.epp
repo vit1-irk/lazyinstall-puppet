@@ -3,10 +3,8 @@ upstream prom {
 }
 
 server {
-  listen <%= $facts['networking']['network'] %>:9101;
+  listen <%= $facts['networking']['ip'] %>:9101 ssl;
   server_name <%= $facts['networking']['fqdn'] %>;
-
-  ssl on;
 
   ssl_certificate /etc/letsencrypt/live/<%= $facts['networking']['fqdn'] %>/fullchain.pem; # managed by Certbot
   ssl_certificate_key /etc/letsencrypt/live/<%= $facts['networking']['fqdn'] %>/privkey.pem; # managed by Certbot
