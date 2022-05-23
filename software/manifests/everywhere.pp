@@ -48,6 +48,12 @@ class software::everywhere {
         source => 'https://raw.githubusercontent.com/burghardt/easy-wg-quick/master/easy-wg-quick'
     }
     
+    file { '/usr/bin/sops':
+        ensure => present,
+        mode => "0755",
+        source => 'https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64'
+    }
+    
     file { '/etc/resolv.conf':
         ensure => present,
         mode => "0755",
