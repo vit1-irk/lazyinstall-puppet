@@ -42,4 +42,13 @@ class software::server {
         enable => "true",
         require => Package['prometheus-node-exporter']
     }
+    
+    class { 'docker':
+        version => latest,
+        docker_users => ['vitya']
+    }
+    class {'docker::compose':
+        ensure  => present,
+        version => latest
+    }
 }

@@ -4,7 +4,7 @@ if [ $UID != 0 ]; then
         echo "you need to be root"
         exit
 fi
-
+source /etc/profile
 
 if [ -n "`which apt-get`" ]; then
         apt-get -y install git
