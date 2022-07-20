@@ -1,4 +1,5 @@
 class software::science {
+    $user = 'vitya'
     $rpkgs = $operatingsystem ? {
         debian => ['r-base', 'r-recommended'],
         ubuntu => ['r-base', 'r-recommended'],
@@ -58,12 +59,17 @@ class software::science {
     ~> exec {'jupyter lab build without minimize': path => $all_path,
         refreshonly => true,
         command => 'jupyter lab build --minimize=False' }
-    
-    
+
     exec { 'install dot kernel': path => $all_path,
         subscribe   => Package['dot_kernel'],
         refreshonly => true,
         command  => 'install-dot-kernel' }
+
+    $all_path = '/usr/local/bin/:/usr/bin'
+    exec { 'install dot kernel for user': path => $all_path,
+        command  => 'install-dot-kernel',
+        onlyif => 'which install-dot-kernel',
+        user => $user }
 
     file { '/etc/R-packages.txt':
         ensure => present,

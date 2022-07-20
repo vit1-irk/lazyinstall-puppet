@@ -5,6 +5,24 @@ class software::everywhere {
         locales         => ['en_US.UTF-8 UTF-8', 'ru_RU.UTF-8 UTF-8']
     }
 
+    $user = 'vitya'
+
+    user { $user:
+        name => $user,
+        ensure => present,
+        managehome => "true"
+    }
+
+    group { "sudo group":
+        name => "sudo",
+        ensure => present
+    }
+
+    exec { "add user to group":
+        command => "/sbin/usermod -a -G sudo $user",
+        require => [User[$user], Group["sudo"]]
+    }
+
     # non-free repo is needed to install broadcom wifi drivers and unrar
     case $facts['os']['name'] { 'Debian': { 
     if $facts['dmi']['manufacturer'] != 'Hetzner' {

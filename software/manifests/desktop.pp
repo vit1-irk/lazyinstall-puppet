@@ -1,32 +1,34 @@
 class software::desktop {
-	$pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'telegram-desktop', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct', 'materia-gtk-theme', 'papirus-icon-theme']
+    $user = 'vitya'
 
-	$pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'pulseaudio-module-bluetooth', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms', 'fonts-firacode']
+    $pkgs_common = ['bleachbit', 'xfce4-screenshooter', 'davfs2', 'ntfs-3g', 'transmission-gtk', 'dosfstools', 'exfat-utils', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'emacs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'x2goclient', 'telegram-desktop', 'youtube-dl', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct', 'materia-gtk-theme', 'papirus-icon-theme']
 
-	$pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'xorg-xinit', 'nextcloud-client', 'android-tools', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'pulseaudio-bluetooth', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
+    $pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'pulseaudio-module-bluetooth', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms', 'fonts-firacode']
+
+    $pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'xorg-xinit', 'nextcloud-client', 'android-tools', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'pulseaudio-bluetooth', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
     
     $pkgs_debian = ['bluez-firmware', 'firefox-esr', 'firefox-esr-l10n-ru', 'thunderbird-l10n-ru']
     $pkgs_ubuntu = ['firefox', 'firefox-locale-ru', 'thunderbird-locale-ru']
     
-	$pkgs_uninst = ['mc', 'mousepad', 'leafpad']
+    $pkgs_uninst = ['mc', 'mousepad', 'leafpad']
 
-	$pkgs_custom = $operatingsystem ? {
-		debian => $pkgs_debbased,
-		ubuntu => $pkgs_debbased,
-		archlinux => $pkgs_arch,
-		manjarolinux => $pkgs_arch
-	}
+    $pkgs_custom = $operatingsystem ? {
+        debian => $pkgs_debbased,
+        ubuntu => $pkgs_debbased,
+        archlinux => $pkgs_arch,
+        manjarolinux => $pkgs_arch
+    }
     
     $pkgs_debflavor = $operatingsystem ? {
-		debian => $pkgs_debian,
-		ubuntu => $pkgs_ubuntu,
+        debian => $pkgs_debian,
+        ubuntu => $pkgs_ubuntu,
         default => []
     }
 
-	package { $pkgs_common: ensure => "installed" }
-	package { $pkgs_custom: ensure => "installed" }
+    package { $pkgs_common: ensure => "installed" }
+    package { $pkgs_custom: ensure => "installed" }
     package { $pkgs_debflavor: ensure => "installed" }
-	package { $pkgs_uninst: ensure => "absent" }
+    package { $pkgs_uninst: ensure => "absent" }
 
     file { '/etc/xdg/autostart/nextcloud-client.desktop':
         ensure => present,
@@ -38,6 +40,13 @@ class software::desktop {
         ensure => present,
         content => file('software/kdeconnect-indicator.desktop'),
         mode => "0644"
+    }
+
+    service { 'Syncthing':
+        name => "syncthing@$user",
+        ensure => "running",
+        enable => "true",
+        require => Package['syncthing']
     }
 
     if $facts['boardmanufacturer'] == "Apple Inc." {
@@ -55,4 +64,25 @@ class software::desktop {
             mode => "0644"
         }
     }
+
+    $icon = 'xdg-desktop-icon install --novendor /usr/share/applications'
+    $all_path = '/usr/local/bin/:/usr/bin'
+
+    file { "xdg bookmarks":
+        path => "/home/$user/.config/gtk-3.0/bookmarks",
+        content => "file:///home/$user/Nextcloud\nfile:///home/$user/Nextcloud/%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0/Camera\nfile:///tmp",
+        owner => $user,
+        ensure => present    
+    }
+
+    $icons = ["firefox.desktop", "org.keepassxc.KeePassXC.desktop", "exo-terminal-emulator.desktop", "x2goclient.desktop", "telegramdesktop.desktop"]
+
+    $icons.each |String $fname| {
+        exec { $fname: path => $all_path,
+            command => "$icon/$fname",
+            environment => [ "HOME=/home/$user" ],
+            user => $user
+        }
+    }
+
 }
