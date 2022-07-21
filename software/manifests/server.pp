@@ -55,10 +55,17 @@ class software::server {
         require => Package['docker-compose-plugin']
     }
     
+    file { '/etc/gitea':
+        ensure => 'directory',
+        owner  => $user,
+        group  => 'root',
+        mode   => '0754'
+    }
     file { '/etc/gitea/docker-compose.yml':
         ensure => present,
         content => file('software/gitea-compose.yml'),
         mode => "0644",
-        owner => $user
+        owner => $user,
+        require => File['/etc/gitea']
     }
 }

@@ -13,7 +13,7 @@ class software::everywhere {
     user { $user:
         name => $user,
         ensure => present,
-        managehome => "true"
+        managehome => "true",
         shell => "/bin/zsh"
     }
 
