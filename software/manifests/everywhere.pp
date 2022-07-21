@@ -4,6 +4,9 @@ class software::everywhere {
         default_locale  => 'ru_RU.UTF-8',
         locales         => ['en_US.UTF-8 UTF-8', 'ru_RU.UTF-8 UTF-8']
     }
+    class { 'resolv_conf':
+        nameservers => ['8.8.8.8', '1.1.1.1']
+    }
 
     $user = 'vitya'
 
@@ -11,6 +14,7 @@ class software::everywhere {
         name => $user,
         ensure => present,
         managehome => "true"
+        shell => "/bin/zsh"
     }
 
     group { "sudo group":
@@ -38,7 +42,7 @@ class software::everywhere {
     }}
 
     $pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'parallel', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'wireguard-dkms', 'wireguard-tools', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof', 'zsh', 'unrar', 'qrencode']
-    $pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'wireguard', 'xz-utils', 'apt-file', 'wcalc', 'resolvconf']
+    $pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'wireguard', 'xz-utils', 'apt-file', 'wcalc']
     $pkgs_arch = ['base-devel', 'cronie', 'openssh', 'python-pip', 'xz', 'calc', 'yay']
 
     $pkgs_uninst = ['yaourt']
@@ -70,13 +74,6 @@ class software::everywhere {
         ensure => present,
         mode => "0755",
         source => 'https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64'
-    }
-    
-    file { '/etc/resolv.conf':
-        ensure => present,
-        mode => "0755",
-        content => "nameserver 8.8.8.8",
-        require => Package['resolvconf']
     }
 
     #if $facts['dmi']['board']['product'] == "M3A" {

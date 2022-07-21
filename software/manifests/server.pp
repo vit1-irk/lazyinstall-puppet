@@ -1,4 +1,5 @@
 class software::server {
+    $user = 'vitya'
     $pkgs = ['apache2-utils', 'letsencrypt', 'certbot', 'python3-certbot-nginx', 'nginx', 'fail2ban', 'emacs-nox', 'tcpdump', 'prometheus-node-exporter']
     $pkgs_uninst = ['apache2-bin']
 
@@ -47,8 +48,17 @@ class software::server {
         version => latest,
         docker_users => ['vitya']
     }
-    class {'docker::compose':
+    ~> package { 'docker-compose-plugin': ensure => "installed" }
+    ~> class {'docker::compose':
         ensure  => present,
-        version => latest
+        version => latest,
+        require => Package['docker-compose-plugin']
+    }
+    
+    file { '/etc/gitea/docker-compose.yml':
+        ensure => present,
+        content => file('software/gitea-compose.yml'),
+        mode => "0644",
+        owner => $user
     }
 }
