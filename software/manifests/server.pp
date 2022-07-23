@@ -6,6 +6,27 @@ class software::server {
     package { $pkgs: ensure => "installed" }
     package { $pkgs_uninst: ensure => "absent" }
 
+    class { 'openssl':
+        package_ensure         => latest,
+        ca_certificates_ensure => latest
+    }
+
+    file { '/etc/ssl/localhost-self.cnf':
+        ensure => present,
+        content => epp('software/self-signed'),
+        mode => "0644"
+    }
+    ssl_pkey { '/etc/ssl/private/localhost-self.key':
+        ensure   => 'present'
+    }
+    x509_cert { '/etc/ssl/certs/localhost-self.crt':
+        ensure      => 'present',
+        template    => '/etc/ssl/localhost-self.cnf',
+        private_key => '/etc/ssl/private/localhost-self.key',
+        days        => 365,
+        force       => false
+    }
+
     service { 'Nginx':
         name => "nginx",
         ensure => "running",

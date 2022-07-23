@@ -7,16 +7,18 @@ fi
 source /etc/profile
 
 if [ -n "`which apt-get`" ]; then
-        apt-get -y install git
-        apt-get -y purge puppet
-        source /etc/os-release
-        if [ "$VERSION_CODENAME" = "jammy" ]; then
-                VERSION_CODENAME="focal";
+        if [ "`dpkg -l | grep puppet7`" = "" ]; then
+            apt-get -y install git
+            apt-get -y purge puppet
+            source /etc/os-release
+            if [ "$VERSION_CODENAME" = "jammy" ]; then
+                    VERSION_CODENAME="focal";
+            fi
+            wget https://apt.puppet.com/puppet7-release-$VERSION_CODENAME.deb -O puppet7-release-$VERSION_CODENAME.deb
+            dpkg -i puppet7-release-$VERSION_CODENAME.deb;
+            apt-get update
+            apt-get -y install puppet-agent
         fi
-        wget https://apt.puppet.com/puppet7-release-$VERSION_CODENAME.deb -O puppet7-release-$VERSION_CODENAME.deb
-        dpkg -i puppet7-release-$VERSION_CODENAME.deb;
-        apt-get update
-        apt-get -y install puppet-agent
         export PATH=$PATH:/opt/puppetlabs/bin
 elif [ -n "`which pacman`" ]; then pacman -Sy --needed --noconfirm git puppet; fi
 

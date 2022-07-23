@@ -14,7 +14,8 @@ class software::everywhere {
         name => $user,
         ensure => present,
         managehome => "true",
-        shell => "/bin/zsh"
+        shell => "/bin/zsh",
+        require => Package["zsh"]
     }
 
     group { "sudo group":
