@@ -52,3 +52,7 @@ fi
 if [ "$1" = "science" ]; then
         puppet apply --modulepath="$puppetpath" science.pp
 fi
+
+if [ "$1" = "personal" ]; then
+        puppet apply --modulepath="$puppetpath" personal.pp
+fi
