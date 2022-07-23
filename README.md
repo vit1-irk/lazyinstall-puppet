@@ -1,12 +1,12 @@
 ### Мои скрипты автоматизации Puppet
 
 ```bash
-wget https://ii-net.tk/zaebis.sh
+wget https://alicorn.tk/zaebis.sh
 chmod +x zaebis.sh
 sudo ./zaebis.sh science
 ```
 
-`zaebis.sh` с ключами `server` или `desktop` запускает Puppet для моих личных десктопных или серверных конфигураций. Тестирование проводилось на Debian Buster (10), Ubuntu 20.10 и ArchLinux (+Manjaro).
+`zaebis.sh` с ключами `server` или `desktop` запускает Puppet для моих личных десктопных или серверных конфигураций. Тестирование проводилось на Debian 11, Ubuntu 22.04 и ArchLinux (+Manjaro).
 
 Ключ `test` в качестве второго параметра игнорирует обновление репозитория через `git pull`
 
@@ -26,7 +26,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 
 - **Серверный пак**
     - для Postgresql + Nextcloud
-    - создание домашнего каталога юзеру
 
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
@@ -45,12 +44,8 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 
 - Puppet не хочет ставить Python-модуль для graphviz, потому что его название совпадает с пакетом в репозитории. Проблема не критичная, возможно пофиксить в будущем или забить на неё и ставить вручную
 
-- в Debian MyPaint и GIMP конфликтуют. Не критично, но всё же проблема
-
 - Хочу модуль FUSE для APFS (libfsapfs-utils)
 
 - Хочу свои любимые шрифты и OnlyOffice в десктоп-пакете
 
 - в KDE-конфигурациях надо подумать насчёт предустановки GUI для настройки планшетов Wacom (kcm-wacomtablet), plasma-browser-integration и plasma-pa
-
-- Полный переход на ZSH
