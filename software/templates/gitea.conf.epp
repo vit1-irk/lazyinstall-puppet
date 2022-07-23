@@ -1,6 +1,6 @@
 <%- | String  $key, String  $cert | -%>
 upstream gitea {
-  server 127.0.0.1:3003;
+  server 127.0.0.1:3000;
 }
 
 server {
