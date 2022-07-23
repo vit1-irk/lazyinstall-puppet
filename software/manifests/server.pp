@@ -58,6 +58,22 @@ class software::server {
         require => Package['nginx'],
         notify  => Service['Nginx']
     }
+    
+    file { '/etc/nginx/sites-enabled/gitea.conf':
+        ensure => present,
+        content => epp('software/gitea.conf', { 'key' => $key_file, 'cert' => $cert_file }),
+        mode => "0644",
+        require => Package['nginx'],
+        notify  => Service['Nginx']
+    }
+
+    file { '/etc/nginx/sites-enabled/gotify.conf':
+        ensure => present,
+        content => epp('software/gotify.conf', { 'key' => $key_file, 'cert' => $cert_file }),
+        mode => "0644",
+        require => Package['nginx'],
+        notify  => Service['Nginx']
+    }
 
     file { '/etc/nginx/sites-enabled/exporter.conf':
         ensure => present,
