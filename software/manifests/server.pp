@@ -27,6 +27,15 @@ class software::server {
         force       => false
     }
 
+    $fqdn = $facts['networking']['fqdn']
+    if find_file("/etc/letsencrypt/live/$fqdn") {
+        $cert_file = "/etc/letsencrypt/live/$fqdn/fullchain.pem"
+        $key_file = "/etc/letsencrypt/live/$fqdn/privkey.pem"
+    } else {
+        $cert_file = '/etc/ssl/certs/localhost-self.crt'
+        $key_file = '/etc/ssl/private/localhost-self.key'
+    }
+
     service { 'Nginx':
         name => "nginx",
         ensure => "running",
@@ -34,17 +43,17 @@ class software::server {
         require => Package['nginx']
     }
 
-    file { '/etc/nginx/sites-enabled/jupyter.conf':
-        ensure => present,
-        content => epp('software/jupyter-nginx.conf'),
+    file { '/etc/nginx/sites-enabled/default':
+        ensure => file,
+        content => file('software/nginx-default.conf'),
         mode => "0644",
         require => Package['nginx'],
         notify  => Service['Nginx']
     }
 
-    file { '/etc/nginx/sites-enabled/default':
+    file { '/etc/nginx/sites-enabled/jupyter.conf':
         ensure => present,
-        content => file('software/nginx-default.conf'),
+        content => epp('software/jupyter-nginx.conf', { 'key' => $key_file, 'cert' => $cert_file }),
         mode => "0644",
         require => Package['nginx'],
         notify  => Service['Nginx']
@@ -52,7 +61,7 @@ class software::server {
 
     file { '/etc/nginx/sites-enabled/exporter.conf':
         ensure => present,
-        content => epp('software/prometheus-node-exporter-nginx.conf'),
+        content => epp('software/prometheus-node-exporter-nginx.conf', { 'key' => $key_file, 'cert' => $cert_file }),
         mode => "0644",
         require => [Package['nginx'], Package['prometheus-node-exporter']],
         notify  => Service['node-exporter']

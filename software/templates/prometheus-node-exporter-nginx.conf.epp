@@ -1,13 +1,14 @@
+<%- | String  $key, String  $cert | -%>
 upstream prom {
   server 127.0.0.1:9100;
 }
 
 server {
   listen <%= $facts['networking']['ip'] %>:9101 ssl;
-  server_name <%= $facts['networking']['fqdn'] %>;
+  server_name _;
 
-  ssl_certificate /etc/letsencrypt/live/<%= $facts['networking']['fqdn'] %>/fullchain.pem; # managed by Certbot
-  ssl_certificate_key /etc/letsencrypt/live/<%= $facts['networking']['fqdn'] %>/privkey.pem; # managed by Certbot
+  ssl_certificate <%= $cert %>; # managed by Certbot
+  ssl_certificate_key <%= $key %>; # managed by Certbot
 
   location / {
     proxy_pass http://prom;
