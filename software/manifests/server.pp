@@ -114,4 +114,29 @@ class software::server {
         owner => $user,
         require => File['/etc/gitea']
     }
+    
+    if find_file("/etc/php") {
+          class { '::php':
+            settings   => {
+                'PHP/display_errors'         => 'On',
+                'PHP/display_startup_errors' => 'On',
+                'PHP/error_reporting'        => 'E_ALL',
+                'PHP/memory_limit'           => '256M',
+                'PHP/max_input_time'         => '300',
+                'PHP/max_execution_time'     => '90',
+                'PHP/post_max_size'          => '32M',
+                'PHP/upload_max_filesize'    => '32M'
+            },
+            fpm => true,
+            fpm_pools => {
+                'www' => {
+                    'listen' => '/var/run/php/php7.4-fpm.sock',
+                    'listen_owner' => "www-data",
+                    'listen_group' => "www-data",
+                    'user' => "www-data",
+                    'group' => "www-data"
+                }
+            }
+        }
+    }
 }
