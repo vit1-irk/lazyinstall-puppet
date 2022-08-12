@@ -134,9 +134,16 @@ class software::server {
                     'listen_owner' => "www-data",
                     'listen_group' => "www-data",
                     'user' => "www-data",
-                    'group' => "www-data"
+                    'group' => "www-data",
+                    'clear_env' => false
                 }
             }
         }
+    }
+
+    file { '/usr/bin/backup-pg.sh':
+        ensure => present,
+        mode => "0755",
+        content => file('software/backup-pg.sh')
     }
 }

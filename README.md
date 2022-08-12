@@ -24,9 +24,6 @@ JHelioviewer 4 (пререлиз): <http://swhv.oma.be/download_test/>
 
 ### Будущие доработки и текущие проблемы:
 
-- **Серверный пак**
-    - для Postgresql + Nextcloud
-
 - **Больше примочек для Jupyter**
     - Хранилище готовых конфигов JupyterLab
 
