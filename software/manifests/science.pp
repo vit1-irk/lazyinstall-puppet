@@ -7,9 +7,9 @@ class software::science {
         manjarolinux => ['r']
     }
     
-	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'x2goserver', 'npm', 'texmaker', 'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science', 'plantuml']
+	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texmaker', 'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science', 'plantuml']
     
-	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek']
+	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek', 'x2goserver']
     
 	$pkgs_arch = ['ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
@@ -65,7 +65,6 @@ class software::science {
         refreshonly => true,
         command  => 'install-dot-kernel' }
 
-    $all_path = '/usr/local/bin/:/usr/bin'
     exec { 'install dot kernel for user': path => $all_path,
         command  => 'install-dot-kernel',
         onlyif => 'which install-dot-kernel',
