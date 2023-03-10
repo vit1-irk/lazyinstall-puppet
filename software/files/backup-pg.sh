@@ -1,6 +1,6 @@
 #!/bin/bash
 
-## install packages: postgresql-12 php7.4-pgsql postgresql-server-dev-all
+## install packages: postgresql-15 php8.2-pgsql postgresql-server-dev-all
 # sudo -i -u postgres
 # createuser --interactive
 # createdb datadbname

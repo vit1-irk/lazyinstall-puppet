@@ -1,6 +1,6 @@
 class software::server {
     $user = 'vitya'
-    $pkgs = ['apache2-utils', 'letsencrypt', 'certbot', 'python3-certbot-nginx', 'nginx', 'fail2ban', 'emacs-nox', 'tcpdump', 'prometheus-node-exporter']
+    $pkgs = ['apache2-utils', 'letsencrypt', 'certbot', 'python3-certbot-nginx', 'nginx', 'fail2ban', 'tcpdump', 'prometheus-node-exporter']
     $pkgs_uninst = ['apache2-bin']
 
     package { $pkgs: ensure => "installed" }
@@ -130,7 +130,7 @@ class software::server {
             fpm => true,
             fpm_pools => {
                 'www' => {
-                    'listen' => '/var/run/php/php7.4-fpm.sock',
+                    'listen' => '/var/run/php/php8.2-fpm.sock',
                     'listen_owner' => "www-data",
                     'listen_group' => "www-data",
                     'user' => "www-data",

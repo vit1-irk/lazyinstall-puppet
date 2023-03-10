@@ -13,7 +13,7 @@ class software::science {
     
 	$pkgs_arch = ['ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
     
-    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'ipyleaflet', 'voila', 'voila-gridstack', 'papermill', 'dot_kernel', 'git+https://github.com/gnudatalanguage/gdl_kernel', 'jupyterlab_latex', 'iplantuml']
+    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'ipympl', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'sunkit-instruments', 'hvpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'papermill', 'dot_kernel', 'jupyter_scheduler', 'iplantuml', 'pip-review', 'ipyparallel']
     
     $pkgs_uninst = ['xmaxima', 'wxmaxima', 'sbcl']
 
@@ -47,28 +47,9 @@ class software::science {
     ~> exec { 'jupyterlab-ipywidgets': path => $all_path,
         refreshonly => true,
         command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' }
-    ~> exec { 'jupyterlab-latex': path => $all_path,
-        refreshonly => true,
-        command => 'jupyter labextension install @jupyterlab/latex --no-build' }
-    ~> exec { 'voila enable serverextension': path => $all_path,
-        refreshonly => true,
-        command => 'jupyter serverextension enable voila --sys-prefix' }
-    ~> exec { 'jupyterlab_latex enable serverextension': path => $all_path,
-        refreshonly => true,
-        command => 'jupyter serverextension enable jupyterlab_latex --sys-prefix' }
     ~> exec {'jupyter lab build without minimize': path => $all_path,
         refreshonly => true,
         command => 'jupyter lab build --minimize=False' }
-
-    exec { 'install dot kernel': path => $all_path,
-        subscribe   => Package['dot_kernel'],
-        refreshonly => true,
-        command  => 'install-dot-kernel' }
-
-    exec { 'install dot kernel for user': path => $all_path,
-        command  => 'install-dot-kernel',
-        onlyif => 'which install-dot-kernel',
-        user => $user }
 
     file { '/etc/R-packages.txt':
         ensure => present,
@@ -76,10 +57,10 @@ class software::science {
         mode => "0644"
     }
 
-    exec { 'install R packages': path => $all_path,
-        subscribe   => Package[$rpkgs],
-        require => File['/etc/R-packages.txt'],
-        timeout => 800,
-        refreshonly => true,
-        command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
+    #exec { 'install R packages': path => $all_path,
+    #    subscribe   => Package[$rpkgs],
+    #    require => File['/etc/R-packages.txt'],
+    #    timeout => 800,
+    #    refreshonly => true,
+    #    command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
 }

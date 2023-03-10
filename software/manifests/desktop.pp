@@ -1,16 +1,16 @@
 class software::desktop {
     $user = 'vitya'
 
-    $pkgs_common = ['bleachbit', 'davfs2', 'ntfs-3g', 'qbittorrent', 'dosfstools', 'exfatprogs', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm', 'udisks2', 'usbutils', 'telegram-desktop', 'yt-dlp', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'audacious', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'vinagre', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'xfburn', 'qt5ct', 'materia-gtk-theme', 'papirus-icon-theme', 'grsync']
+    $pkgs_common = ['bleachbit', 'davfs2', 'ntfs-3g', 'qbittorrent', 'dosfstools', 'exfatprogs', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm-qt', 'udisks2', 'usbutils', 'telegram-desktop', 'yt-dlp', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'remmina', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'qt5ct', 'materia-gtk-theme', 'papirus-icon-theme', 'grsync']
 
-    $pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'pulseaudio-module-bluetooth', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms', 'fonts-firacode', 'x2goclient']
+    $pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'android-tools-adb', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms', 'fonts-firacode', 'x2goclient']
 
-    $pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'xorg-xinit', 'nextcloud-client', 'android-tools', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'pulseaudio-bluetooth', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
+    $pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'xorg-xinit', 'nextcloud-client', 'android-tools', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
     
     $pkgs_debian = ['bluez-firmware', 'firefox-esr', 'firefox-esr-l10n-ru', 'thunderbird-l10n-ru']
     $pkgs_ubuntu = ['firefox', 'firefox-locale-ru', 'thunderbird-locale-ru']
     
-    $pkgs_uninst = ['mc', 'mousepad', 'leafpad', 'emacs', 'youtube-dl', 'transmission-gtk']
+    $pkgs_uninst = ['mc', 'mousepad', 'leafpad', 'emacs', 'youtube-dl', 'transmission-gtk', 'vinagre']
 
     $pkgs_custom = $operatingsystem ? {
         debian => $pkgs_debbased,
@@ -58,11 +58,11 @@ class software::desktop {
             mode => "0644"
         }
 
-        file { '/etc/X11/xorg.conf.d/10-mtrack.conf':
-            ensure => present,
-            content => file('software/10-mtrack.conf'),
-            mode => "0644"
-        }
+        #file { '/etc/X11/xorg.conf.d/10-mtrack.conf':
+        #    ensure => present,
+        #    content => file('software/10-mtrack.conf'),
+        #    mode => "0644"
+        #}
     }
 
     $icon = 'xdg-desktop-icon install --novendor /usr/share/applications'
