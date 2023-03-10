@@ -11,5 +11,6 @@ puppet module install puppetlabs-docker --version 4.4.0
 puppet module install saz-resolv_conf --version 5.0.0
 puppet module install puppet-openssl --version 2.0.1
 puppet module install saz-ssh --version 6.2.0
-puppet module install puppet-php --version 8.1.1
+puppet module install puppet-php --version 8.2.0
+puppet module install puppet-archive --version 6.1.1
 #puppet module install eyp-python --version 0.1.13
