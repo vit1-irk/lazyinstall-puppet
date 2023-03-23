@@ -70,7 +70,7 @@ class software::desktop {
 
     file { "xdg bookmarks":
         path => "/home/$user/.config/gtk-3.0/bookmarks",
-        content => "file:///home/$user/Nextcloud\nfile:///home/$user/Nextcloud/%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0/Camera\nfile:///tmp",
+        content => "file:///home/$user/Nextcloud\nfile:///home/$user/Nextcloud/%D0%90%D0%B2%D1%82%D0%BE%D0%B7%D0%B0%D0%B3%D1%80%D1%83%D0%B7%D0%BA%D0%B0\nfile:///tmp",
         owner => $user,
         ensure => present    
     }
