@@ -1,11 +1,11 @@
 class software::science {
     $user = 'vitya'
     
-	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texmaker', 'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science', 'plantuml']
+	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texmaker', 'plantuml']
     
-	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'texlive-binaries', 'texlive-base', 'texlive-bibtex-extra', 'texlive-fonts-extra', 'texlive-latex-extra', 'texlive-formats-extra', 'texlive-lang-cyrillic', 'texlive-lang-greek', 'x2goserver']
+	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'x2goserver']
     
-	$pkgs_arch = ['ds9', 'texlive-bin', 'texlive-core', 'texlive-bibtexextra', 'texlive-fontsextra', 'texlive-latexextra', 'texlive-formatsextra', 'texlive-langcyrillic', 'texlive-langgreek']
+	$pkgs_arch = ['ds9']
     
     $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'ipympl', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'sunkit-instruments', 'hvpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'papermill', 'dot_kernel', 'jupyter_scheduler', 'iplantuml', 'pip-review', 'ipyparallel']
     
@@ -32,6 +32,17 @@ class software::science {
     
     $all_path = '/usr/local/bin/:/usr/bin'
 
+    file { '/opt/latex-compose.yml':
+        ensure => present,
+        content => file('software/latex-compose.yml'),
+        mode => "0644"
+    }
+
+    file { '/usr/bin/latex-docker':
+        ensure => present,
+        content => file('software/tex-wrapper.sh'),
+        mode => "0755"
+    }
     #$rpkgs = $operatingsystem ? {
     #    debian => ['r-base', 'r-recommended'],
     #    ubuntu => ['r-base', 'r-recommended'],
