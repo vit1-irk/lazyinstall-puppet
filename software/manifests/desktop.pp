@@ -30,18 +30,6 @@ class software::desktop {
     package { $pkgs_debflavor: ensure => "installed" }
     package { $pkgs_uninst: ensure => "absent" }
 
-    file { '/etc/xdg/autostart/nextcloud-client.desktop':
-        ensure => present,
-        content => file('software/nextcloud-client.desktop'),
-        mode => "0644"
-    }
-
-    file { '/etc/xdg/autostart/kdeconnect-indicator.desktop':
-        ensure => present,
-        content => file('software/kdeconnect-indicator.desktop'),
-        mode => "0644"
-    }
-
     service { 'Syncthing':
         name => "syncthing@$user",
         ensure => "running",
@@ -75,7 +63,7 @@ class software::desktop {
         ensure => present    
     }
 
-    $icons = ["firefox.desktop", "org.keepassxc.KeePassXC.desktop", "exo-terminal-emulator.desktop", "x2goclient.desktop", "telegramdesktop.desktop"]
+    $icons = ["firefox.desktop", "org.keepassxc.KeePassXC.desktop", "x2goclient.desktop", "telegramdesktop.desktop"]
 
     $icons.each |String $fname| {
         exec { $fname: path => $all_path,

@@ -1,11 +1,5 @@
 class software::science {
     $user = 'vitya'
-    $rpkgs = $operatingsystem ? {
-        debian => ['r-base', 'r-recommended'],
-        ubuntu => ['r-base', 'r-recommended'],
-        archlinux => ['r'],
-        manjarolinux => ['r']
-    }
     
 	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texmaker', 'texlive-humanities', 'texlive-pictures', 'texlive-pstricks', 'texlive-publishers', 'texlive-science', 'plantuml']
     
@@ -25,7 +19,6 @@ class software::science {
 	}
 
     package { $pkgs_common: ensure => "installed" }
-    package { $rpkgs: ensure => "installed" }
 	package { $pkgs_custom: ensure => "installed" }
 	package { $pkgs_uninst: ensure => "absent" }
     
@@ -38,25 +31,19 @@ class software::science {
     }
     
     $all_path = '/usr/local/bin/:/usr/bin'
-    
-    # maybe remove it
-    exec { 'jupyter-ipywidgets': path => $all_path,
-        command => 'jupyter nbextension enable --py widgetsnbextension',
-        refreshonly => true,
-        subscribe => Package['ipywidgets']}
-    ~> exec { 'jupyterlab-ipywidgets': path => $all_path,
-        refreshonly => true,
-        command => 'jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build' }
-    ~> exec {'jupyter lab build without minimize': path => $all_path,
-        refreshonly => true,
-        command => 'jupyter lab build --minimize=False' }
 
-    file { '/etc/R-packages.txt':
-        ensure => present,
-        content => file('software/R-packages.txt'),
-        mode => "0644"
-    }
-
+    #$rpkgs = $operatingsystem ? {
+    #    debian => ['r-base', 'r-recommended'],
+    #    ubuntu => ['r-base', 'r-recommended'],
+    #    archlinux => ['r'],
+    #    manjarolinux => ['r']
+    #}
+    #package { $rpkgs: ensure => "installed" }
+    #file { '/etc/R-packages.txt':
+    #    ensure => present,
+    #    content => file('software/R-packages.txt'),
+    #    mode => "0644"
+    #}
     #exec { 'install R packages': path => $all_path,
     #    subscribe   => Package[$rpkgs],
     #    require => File['/etc/R-packages.txt'],
