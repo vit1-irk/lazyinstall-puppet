@@ -7,7 +7,7 @@ class software::science {
     
 	$pkgs_arch = ['ds9']
     
-    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'ipympl', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'sunkit-instruments', 'hvpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'papermill', 'dot_kernel', 'jupyter_scheduler', 'iplantuml', 'pip-review', 'ipyparallel']
+    $pip_packages = ['jupyter', 'jupyterlab', 'aiohttp', 'lxml', 'matplotlib', 'ipympl', 'numpy', 'scipy', 'sympy', 'pandas', 'seaborn', 'pillow', 'astropy', 'sunpy', 'sunkit-instruments', 'hvpy', 'apprise', 'requests', 'bs4', 'drms', 'zeep', 'h5netcdf', 'ipywidgets', 'papermill', 'dot_kernel', 'jupyter_scheduler', 'jupyter_collaboration', 'jupyterlab-link-share', 'iplantuml', 'pip-review', 'ipyparallel']
     
     $pkgs_uninst = ['xmaxima', 'wxmaxima', 'sbcl']
 
