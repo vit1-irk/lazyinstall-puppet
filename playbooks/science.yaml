@@ -1,0 +1,76 @@
+- name: Setup science software
+  hosts: localhost
+  become: yes  # Use this if you need sudo privileges
+  vars:
+    user: 'vitya'
+  tasks:
+    - name: Install common packages
+      package:
+        name:
+          - geogebra
+          - graphviz
+          - npm
+          - texstudio
+          - plantuml
+        state: present
+
+    - name: Install custom packages based on OS
+      apt:
+        name:
+          - saods9
+          - python3-dev
+        state: present
+      when: ansible_os_family in ['Debian', 'Ubuntu']
+
+    - name: Install custom packages for Arch Linux
+      pacman:
+        name:
+          - ds9
+        state: present
+      when: ansible_os_family == "Archlinux"
+
+    - name: Install Python packages
+      pip:
+        name:
+          - jupyterlab
+          - aiohttp
+          - lxml
+          - matplotlib
+          - ipympl
+          - numpy
+          - scipy
+          - sympy
+          - pandas
+          - seaborn
+          - pillow
+          - astropy
+          - sunpy
+          - sunkit-instruments
+          - hvpy
+          - apprise
+          - requests
+          - bs4
+          - drms
+          - zeep
+          - h5netcdf
+          - ipywidgets
+          - papermill
+          - dot_kernel
+          - jupyter_scheduler
+          - jupyter_collaboration
+          - jupyterlab-link-share
+          - iplantuml
+        state: present
+        executable: pip3
+
+    - name: Clone IDLAstro repository
+      git:
+        repo: "https://github.com/wlandsman/IDLAstro"
+        dest: "/opt/IDLAstro"
+        update: yes
+
+    - name: Ensure latex-docker script is present
+      copy:
+        src: software/tex-wrapper.sh  # Path to the local file
+        dest: /usr/bin/latex-docker
+        mode: '0755'

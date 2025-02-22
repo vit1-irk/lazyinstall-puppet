@@ -1,0 +1,155 @@
+---
+- name: Install packages based on OS
+  hosts: localhost
+  become: yes  # Use this if you need sudo privileges
+  vars:
+    pkgs_common:
+      - bleachbit
+      - davfs2
+      - ntfs-3g
+      - qbittorrent
+      - dosfstools
+      - exfatprogs
+      - gucharmap
+      - gvfs
+      - geany
+      - modemmanager
+      - mpv
+      - os-prober
+      - parted
+      - gparted
+      - fatresize
+      - udisks2
+      - usbutils
+      - telegram-desktop
+      - yt-dlp
+      - zenity
+      - zip
+      - squashfs-tools
+      - keepassxc
+      - debootstrap
+      - f2fs-tools
+      - gimp
+      - remmina
+      - mtpaint
+      - powertop
+      - simplescreenrecorder
+      - seahorse
+      - thunderbird
+      - tor
+      - torsocks
+      - translate-shell
+      - onboard
+      - qt5ct
+      - grsync
+
+    pkgs_debbased:
+      - fdisk
+      - gdisk
+      - gvfs-fuse
+      - wpasupplicant
+      - nextcloud-desktop
+      - bluez-tools
+      - go-mtpfs
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - gstreamer1.0-pulseaudio
+      - libgstreamer-plugins-bad1.0-0
+      - proxychains
+      - localepurge
+      - broadcom-sta-dkms
+      - fonts-firacode
+
+    pkgs_arch:
+      - firefox
+      - firefox-i18n-ru
+      - arch-install-scripts
+      - wpa_supplicant
+      - nextcloud-client
+      - bluez-utils
+      - gst-libav
+      - gst-plugins-bad
+      - gst-plugins-base
+      - gst-plugins-good
+      - gst-plugins-ugly
+      - gstreamer-vaapi
+      - gvfs-mtp
+      - broadcom-wl-dkms
+      - discord
+      - mtpfs
+      - pacgraph
+      - proxychains-ng
+      - thunderbird-i18n-ru
+      - mypaint
+      - ttf-fira-sans
+      - ttf-fira-mono
+      - ttf-fira-code
+
+    pkgs_debian:
+      - bluez-firmware
+      - firefox-esr
+      - firefox-esr-l10n-ru
+      - thunderbird-l10n-ru
+
+    pkgs_ubuntu:
+      - firefox
+      - firefox-locale-ru
+      - thunderbird-locale-ru
+
+  tasks:
+    - name: Install common packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs_common }}"
+
+    - name: Install Debian-based specific packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs_debbased }}"
+      when: ansible_os_family in ['Debian', 'Ubuntu']
+
+    - name: Install Arch Linux specific packages
+      pacman:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs_arch }}"
+      when: ansible_os_family == 'Archlinux'
+
+    - name: Install Debian specific packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs_debian }}"
+      when: ansible_distribution == 'Debian'
+
+    - name: Install Ubuntu specific packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs_ubuntu }}"
+      when: ansible_distribution == 'Ubuntu'
+
+    - name: Download and extract Android platform tools
+      unarchive:
+        src: 'https://dl.google.com/android/repository/platform-tools-latest-linux.zip'
+        dest: '/opt'
+        remote_src: yes
+        creates: '/opt/platform-tools'
+      register: android_tools
+
+    - name: Create symbolic link for adb
+      file:
+        src: '/opt/platform-tools/adb'
+        dest: '/usr/bin/adb'
+        state: link
+        mode: '0755'
+      when: android_tools is changed
+
+    - name: Download fdroidcl binary
+      get_url:
+        url: 'https://github.com/mvdan/fdroidcl/releases/download/v0.7.0/fdroidcl_v0.7.0_linux_amd64'
+        dest: '/usr/bin/fdroidcl'
+        mode: '0755'
+

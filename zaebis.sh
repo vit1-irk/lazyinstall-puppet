@@ -6,18 +6,8 @@ if [ $UID != 0 ]; then
 fi
 source /etc/profile
 
-if [ -n "`which apt-get`" ]; then
-        if [ "`dpkg -l | grep puppet7`" = "" ]; then
-            apt-get -y install git
-            apt-get -y purge puppet
-            source /etc/os-release
-            wget https://apt.puppet.com/puppet7-release-$VERSION_CODENAME.deb -O puppet7-release-$VERSION_CODENAME.deb
-            dpkg -i puppet7-release-$VERSION_CODENAME.deb;
-            apt-get update
-            apt-get -y install puppet-agent
-        fi
-        export PATH=$PATH:/opt/puppetlabs/bin
-elif [ -n "`which pacman`" ]; then pacman -Sy --needed --noconfirm git puppet; fi
+if [ -n "`which apt-get`" ]; then apt-get -y install git ansible;
+elif [ -n "`which pacman`" ]; then pacman -Sy --needed --noconfirm git ansible; fi
 
 if [ -d ".git" ]; then
     echo "we are inside git repo"
@@ -34,22 +24,23 @@ else
     git pull
 fi
 
-./puppet-module.sh
+cd playbooks
 
-puppetpath=".:/etc/puppetlabs/code/environments/production/modules:/etc/puppetlabs/code/modules:/etc/puppet/code/modules"
+ansible-playbook everywhere.yaml
+ansible-playbook archlinuxcn.yaml
 
 if [ "$1" = "desktop" ]; then
-        puppet apply --modulepath="$puppetpath" desktop.pp
+    ansible-playbook desktop.yaml
 fi
 
 if [ "$1" = "server" ]; then
-        puppet apply --modulepath="$puppetpath" server.pp
+    ansible-playbook server.yaml
 fi
 
 if [ "$1" = "science" ]; then
-        puppet apply --modulepath="$puppetpath" science.pp
+    ansible-playbook science.yaml
 fi
 
 if [ "$1" = "personal" ]; then
-        puppet apply --modulepath="$puppetpath" personal.pp
+    ansible-playbook personal1.yaml
 fi

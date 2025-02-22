@@ -1,0 +1,108 @@
+---
+- name: Configure software server
+  hosts: all
+  become: yes
+  vars:
+    user: 'vitya'
+    pkgs:
+      - apache2-utils
+      - letsencrypt
+      - certbot
+      - python3-certbot-nginx
+      - nginx
+      - fail2ban
+      - tcpdump
+      - prometheus-node-exporter
+    pkgs_uninst:
+      - apache2-bin
+    php_settings:
+      display_errors: 'On'
+      display_startup_errors: 'On'
+      error_reporting: 'E_ALL'
+      memory_limit: '256M'
+      max_input_time: '300'
+      max_execution_time: '90'
+      post_max_size: '32M'
+      upload_max_filesize: '32M'
+    php_fpm_pool:
+      listen: '/var/run/php/php8.2-fpm.sock'
+      listen_owner: 'www-data'
+      listen_group: 'www-data'
+      user: 'www-data'
+      group: 'www-data'
+      clear_env: false
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ pkgs }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Uninstall unwanted packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ pkgs_uninst }}"
+      when: ansible_os_family == "Debian"
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: latest
+
+    - name: Add user to Docker group
+      user:
+        name: "{{ user }}"
+        groups: docker
+        append: yes
+
+    - name: Install Docker Compose plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+
+    - name: Install Docker Compose
+      apt:
+        name: docker-compose
+        state: latest
+
+    - name: Check if PHP is installed
+      stat:
+        path: /etc/php
+      register: php_installed
+
+    - name: Install PHP and configure settings
+      block:
+        - name: Install PHP packages
+          apt:
+            name: php
+            state: present
+
+        - name: Configure PHP settings
+          lineinfile:
+            path: /etc/php/8.2/fpm/php.ini
+            regexp: '^{{ item.key }}'
+            line: '{{ item.key }} = {{ item.value }}'
+          loop: "{{ php_settings | dict2items }}"
+
+        - name: Configure PHP-FPM pool
+          blockinfile:
+            path: /etc/php/8.2/fpm/pool.d/www.conf
+            block: |
+              [www]
+              listen = {{ php_fpm_pool.listen }}
+              listen.owner = {{ php_fpm_pool.listen_owner }}
+              listen.group = {{ php_fpm_pool.listen_group }}
+              user = {{ php_fpm_pool.user }}
+              group = {{ php_fpm_pool.group }}
+              clear_env = {{ php_fpm_pool.clear_env }}
+
+      when: php_installed.stat.exists
+
+    - name: Ensure backup script is present
+      copy:
+        src: software/backup-pg.sh
+        dest: /usr/bin/backup-pg.sh
+        mode: '0755'

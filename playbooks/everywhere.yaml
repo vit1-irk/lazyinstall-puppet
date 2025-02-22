@@ -1,0 +1,184 @@
+---
+- name: Setup system configuration
+  hosts: localhost
+  become: yes  # Use this if you need sudo privileges
+  tasks:
+    - name: Set system timezone to UTC
+      command: timedatectl set-timezone Asia/Irkutsk
+
+    - name: Install locales
+      apt:
+        name: locales
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Generate locales
+      command: locale-gen en_US.UTF-8 zh_CN.UTF-8 ru_RU.UTF-8
+      when: ansible_os_family == "Debian"
+
+    - name: Set default locale
+      lineinfile:
+        path: /etc/default/locale
+        line: "LANG=ru_RU.UTF-8"
+        create: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Ensure the locale.gen file is present
+      file:
+        path: /etc/locale.gen
+        state: touch
+      when: ansible_os_family == "Archlinux"
+
+    - name: Set available locales in /etc/locale.gen
+      lineinfile:
+        path: /etc/locale.gen
+        line: "{{ item }}"
+        state: present
+      loop:
+        - "en_US.UTF-8 UTF-8"
+        - "zh_CN.UTF-8 UTF-8"
+      notify: Generate locales
+      when: ansible_os_family == "Archlinux"
+
+    - name: Set locale for Arch Linux
+      lineinfile:
+        path: /etc/locale.conf
+        line: "LANG=ru_RU.UTF-8"
+        create: yes
+      when: ansible_os_family == "Archlinux"
+
+    - name: Generate locales for Arch Linux
+      command: locale-gen
+      when: ansible_os_family == "Archlinux"
+
+    - name: Set DNS servers
+      lineinfile:
+        path: /etc/resolv.conf
+        line: "{{ item }}"
+        state: present
+      loop:
+        - "nameserver 8.8.8.8"
+        - "nameserver 1.1.1.1"
+
+    - name: Create sudo group if it does not exist
+      group:
+        name: sudo
+        state: present
+
+    - name: Create a user with zsh shell if it does not exist
+      user:
+        name: vitya
+        shell: /usr/bin/zsh
+        state: present
+
+    - name: Add user to sudo group
+      user:
+        name: vitya
+        groups: sudo
+        append: yes
+
+    - name: Check if the non-free-firmware repository is present if Debian
+      command: grep -E 'deb .* non-free-firmware' /etc/apt/sources.list /etc/apt/sources.list.d/*
+      register: repo_check
+      ignore_errors: yes
+      when: ansible_distribution == "Debian"
+
+    - name: Add non-free-firmware repository if not present
+      lineinfile:
+        path: /etc/apt/sources.list
+        line: "deb http://deb.debian.org/debian/ {{ ansible_lsb.codename }} main contrib non-free non-free-firmware"
+        state: present
+      when: repo_check.rc != 0 and ansible_distribution == "Debian"
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      when: repo_check.rc != 0 and ansible_distribution == "Debian"
+
+    - name: Install common packages
+      package:
+        name: 
+          - vim
+          - git
+          - curl
+          - bash-completion
+          - busybox
+          - diffutils
+          - autossh
+          - dkms
+          - elinks
+          - file
+          - findutils
+          - gdb
+          - graphicsmagick
+          - grep
+          - moreutils
+          - ncdu
+          - nmap
+          - p7zip
+          - patch
+          - pciutils
+          - rsync
+          - screen
+          - sed
+          - sshfs
+          - sudo
+          - unzip
+          - wget
+          - ethtool
+          - fdupes
+          - iftop
+          - iotop
+          - lshw
+          - lsof
+          - zsh
+          - unrar
+          - qrencode
+          - net-tools
+        state: present
+
+    - name: Install packages for Debian/Ubuntu
+      apt:
+        name: 
+          - adduser
+          - apt-utils
+          - apt-transport-https
+          - build-essential
+          - cron
+          - openssh-client
+          - openssh-server
+          - openssh-sftp-server
+          - python3-pip
+          - xz-utils
+          - apt-file
+          - wcalc
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Install packages for Arch-based systems
+      pacman:
+        name: 
+          - base-devel
+          - cronie
+          - openssh
+          - python-pip
+          - xz
+          - calc
+          - yay
+        state: present
+      when: ansible_os_family == "Archlinux"
+
+    - name: Ensure checkmemory.sh is present with correct permissions
+      copy:
+        src: software/checkmemory.sh  # Path to the local file
+        dest: /usr/bin/checkmemory.sh
+        mode: '0755'
+        owner: root
+        group: root
+
+    - name: Ensure sops is downloaded and present with correct permissions
+      get_url:
+        url: 'https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64'
+        dest: /usr/bin/sops
+        mode: '0755'
+

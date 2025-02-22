@@ -5,8 +5,6 @@ chmod +x zaebis.sh
 sudo ./zaebis.sh science
 ```
 
-`zaebis.sh` с ключами `server` или `desktop` запускает Puppet для моих личных десктопных или серверных конфигураций. Тестирование проводилось на Debian 11, Ubuntu 22.10 и ArchLinux (+Manjaro).
-
 Ключ `test` в качестве второго параметра игнорирует обновление репозитория через `git pull`
 
 Включаем basic auth для Nginx: `sudo htpasswd -c /etc/nginx/.htpasswd username`

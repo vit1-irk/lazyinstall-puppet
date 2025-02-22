@@ -1,0 +1,25 @@
+- name: Setup ArchLinuxCN repository
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Ensure pacman.conf includes archlinuxcn configuration file
+      lineinfile:
+        path: /etc/pacman.conf
+        line: 'Include = /etc/pacman.d/archlinuxcn.conf'
+        create: yes
+
+    - name: Create or update the ArchLinuxCN repo config file
+      copy:
+        dest: /etc/pacman.d/archlinuxcn.conf
+        content: |
+          [archlinuxcn]
+          Server = http://repo.archlinuxcn.org/$arch
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Synchronize ArchLinuxCN keyring
+      command:
+        cmd: /usr/bin/pacman --noconfirm --sync --refresh archlinuxcn-keyring
+      when: ansible_os_family == "Archlinux"
