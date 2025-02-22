@@ -1,8 +1,0 @@
-services:
-    mylatex:
-        image: leplusorg/latex
-        container_name: mylatex
-        volumes:
-            - $HOME:$HOME
-        tty: true
-        stdin_open: true

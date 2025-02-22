@@ -1,7 +1,7 @@
 class software::science {
     $user = 'vitya'
     
-	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texmaker', 'plantuml']
+	$pkgs_common = ['geogebra', 'gnuplot', 'kmplot', 'graphviz', 'npm', 'texstudio', 'plantuml']
     
 	$pkgs_debbased = ['gnuplot-qt', 'saods9', 'gnudatalanguage', 'libopenblas-base', 'plplot-driver-qt', 'plplot-driver-wxwidgets', 'plplot-driver-xwin', 'python3-dev', 'x2goserver']
     
@@ -32,33 +32,9 @@ class software::science {
     
     $all_path = '/usr/local/bin/:/usr/bin'
 
-    file { '/opt/latex-compose.yml':
-        ensure => present,
-        content => file('software/latex-compose.yml'),
-        mode => "0644"
-    }
-
     file { '/usr/bin/latex-docker':
         ensure => present,
         content => file('software/tex-wrapper.sh'),
         mode => "0755"
     }
-    #$rpkgs = $operatingsystem ? {
-    #    debian => ['r-base', 'r-recommended'],
-    #    ubuntu => ['r-base', 'r-recommended'],
-    #    archlinux => ['r'],
-    #    manjarolinux => ['r']
-    #}
-    #package { $rpkgs: ensure => "installed" }
-    #file { '/etc/R-packages.txt':
-    #    ensure => present,
-    #    content => file('software/R-packages.txt'),
-    #    mode => "0644"
-    #}
-    #exec { 'install R packages': path => $all_path,
-    #    subscribe   => Package[$rpkgs],
-    #    require => File['/etc/R-packages.txt'],
-    #    timeout => 800,
-    #    refreshonly => true,
-    #    command  => 'cat /etc/R-packages.txt | R CMD BATCH /dev/stdin /dev/stdout' }
 }

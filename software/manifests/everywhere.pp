@@ -42,8 +42,8 @@ class software::everywhere {
         include software::archlinuxcn
     }}
 
-    $pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'autossh', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'parallel', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'wireguard-tools', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof', 'zsh', 'unrar', 'qrencode', 'net-tools']
-    $pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'wireguard', 'xz-utils', 'apt-file', 'wcalc']
+    $pkgs_common = ['vim', 'git', 'curl', 'bash-completion', 'busybox', 'diffutils', 'autossh', 'dkms', 'elinks', 'file', 'findutils', 'gdb', 'graphicsmagick', 'grep', 'moreutils', 'ncdu', 'nmap', 'p7zip', 'patch', 'pciutils', 'rsync', 'screen', 'sed', 'sshfs', 'sudo', 'unzip', 'wget', 'ethtool', 'fdupes', 'iftop', 'iotop', 'lshw', 'lsof', 'zsh', 'unrar', 'qrencode', 'net-tools']
+    $pkgs_deb = ['adduser', 'apt-utils', 'apt-transport-https', 'build-essential', 'cron', 'openssh-client', 'openssh-server', 'openssh-sftp-server', 'python3-pip', 'xz-utils', 'apt-file', 'wcalc']
     $pkgs_arch = ['base-devel', 'cronie', 'openssh', 'python-pip', 'xz', 'calc', 'yay']
 
     $pkgs_uninst = ['yaourt']
@@ -64,30 +64,10 @@ class software::everywhere {
         mode => "0755",
         content => file('software/checkmemory.sh')
     }
-
-    file { '/usr/bin/easy-wg-quick':
-        ensure => present,
-        mode => "0755",
-        source => 'https://raw.githubusercontent.com/burghardt/easy-wg-quick/master/easy-wg-quick'
-    }
     
     file { '/usr/bin/sops':
         ensure => present,
         mode => "0755",
         source => 'https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux.amd64'
     }
-
-    #if $facts['dmi']['board']['product'] == "M3A" {
-    #    file { '/etc/systemd/system/m3a-usbfix.service':
-    #        ensure => present,
-    #        mode => "0644",
-    #        content => file('software/m3a-usbfix.service')
-    #    }
-    #    service { 'm3a-usbfix':
-    #        name => "m3a-usbfix",
-    #        ensure => "running",
-    #        enable => "true",
-    #        require => File['/etc/systemd/system/m3a-usbfix.service']
-    #    }
-    #}
 }

@@ -1,11 +1,11 @@
 class software::desktop {
     $user = 'vitya'
 
-    $pkgs_common = ['bleachbit', 'davfs2', 'ntfs-3g', 'qbittorrent', 'dosfstools', 'exfatprogs', 'gucharmap', 'gvfs', 'kde-cli-tools', 'kdeconnect', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'pavucontrol', 'fatresize', 'pcmanfm-qt', 'udisks2', 'usbutils', 'telegram-desktop', 'yt-dlp', 'zenity', 'zip', 'squashfs-tools', 'syncthing', 'keepassxc', 'debootstrap', 'okular', 'f2fs-tools', 'gimp', 'remmina', 'mtpaint', 'powertop', 'refind', 'shadowsocks-libev', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'qt5ct', 'materia-gtk-theme', 'papirus-icon-theme', 'grsync']
+    $pkgs_common = ['bleachbit', 'davfs2', 'ntfs-3g', 'qbittorrent', 'dosfstools', 'exfatprogs', 'gucharmap', 'gvfs', 'geany', 'modemmanager', 'mpv', 'os-prober', 'parted', 'gparted', 'fatresize', 'udisks2', 'usbutils', 'telegram-desktop', 'yt-dlp', 'zenity', 'zip', 'squashfs-tools', 'keepassxc', 'debootstrap', 'f2fs-tools', 'gimp', 'remmina', 'mtpaint', 'powertop', 'simplescreenrecorder', 'seahorse', 'thunderbird', 'tor', 'torsocks', 'translate-shell', 'onboard', 'qt5ct', 'grsync']
 
-    $pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'x11-utils', 'xinit', 'nextcloud-desktop', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'localepurge', 'libfsapfs1', 'libfsapfs-utils', 'broadcom-sta-dkms', 'fonts-firacode', 'x2goclient']
+    $pkgs_debbased = ['fdisk', 'gdisk', 'gvfs-fuse', 'wpasupplicant', 'nextcloud-desktop', 'bluez-tools', 'go-mtpfs', 'gstreamer1.0-plugins-base', 'gstreamer1.0-plugins-good', 'gstreamer1.0-pulseaudio', 'libgstreamer-plugins-bad1.0-0', 'proxychains', 'localepurge', 'broadcom-sta-dkms', 'fonts-firacode']
 
-    $pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'xorg-xinit', 'nextcloud-client', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
+    $pkgs_arch = ['firefox', 'firefox-i18n-ru', 'arch-install-scripts', 'wpa_supplicant', 'nextcloud-client', 'bluez-utils', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gstreamer-vaapi', 'gvfs-mtp', 'broadcom-wl-dkms', 'discord', 'mtpfs', 'pacgraph', 'proxychains-ng', 'refind-drivers', 'thunderbird-i18n-ru', 'mypaint', 'ttf-fira-sans', 'ttf-fira-mono', 'ttf-fira-code']
     
     $pkgs_debian = ['bluez-firmware', 'firefox-esr', 'firefox-esr-l10n-ru', 'thunderbird-l10n-ru']
     $pkgs_ubuntu = ['firefox', 'firefox-locale-ru', 'thunderbird-locale-ru']
