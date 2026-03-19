@@ -132,6 +132,7 @@
           - lshw
           - lsof
           - zsh
+          - zsh-completion
           - unrar
           - qrencode
           - net-tools
@@ -148,7 +149,6 @@
           - openssh-client
           - openssh-server
           - openssh-sftp-server
-          - python3-pip
           - xz-utils
           - apt-file
           - wcalc
@@ -157,24 +157,15 @@
 
     - name: Install packages for Arch-based systems
       pacman:
-        name: 
+        name:
           - base-devel
           - cronie
           - openssh
-          - python-pip
           - xz
           - calc
           - yay
         state: present
       when: ansible_os_family == "Archlinux"
-
-    - name: Ensure checkmemory.sh is present with correct permissions
-      copy:
-        src: software/checkmemory.sh  # Path to the local file
-        dest: /usr/bin/checkmemory.sh
-        mode: '0755'
-        owner: root
-        group: root
 
     - name: Ensure sops is downloaded and present with correct permissions
       get_url:

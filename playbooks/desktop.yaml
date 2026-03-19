@@ -10,7 +10,6 @@
       - qbittorrent
       - dosfstools
       - exfatprogs
-      - gucharmap
       - gvfs
       - geany
       - modemmanager
@@ -23,7 +22,6 @@
       - usbutils
       - telegram-desktop
       - yt-dlp
-      - zenity
       - zip
       - squashfs-tools
       - keepassxc
@@ -32,15 +30,12 @@
       - gimp
       - remmina
       - mtpaint
-      - powertop
-      - simplescreenrecorder
+      - btop
       - seahorse
       - thunderbird
       - tor
       - torsocks
       - translate-shell
-      - onboard
-      - qt5ct
       - grsync
 
     pkgs_debbased:
@@ -80,7 +75,8 @@
       - pacgraph
       - proxychains-ng
       - thunderbird-i18n-ru
-      - mypaint
+      - rnote
+      - xournalpp
       - ttf-fira-sans
       - ttf-fira-mono
       - ttf-fira-code
@@ -146,10 +142,3 @@
         state: link
         mode: '0755'
       when: android_tools is changed
-
-    - name: Download fdroidcl binary
-      get_url:
-        url: 'https://github.com/mvdan/fdroidcl/releases/download/v0.7.0/fdroidcl_v0.7.0_linux_amd64'
-        dest: '/usr/bin/fdroidcl'
-        mode: '0755'
-
