@@ -7,8 +7,6 @@
 # dropdb mydb
 ## enter sql commands
 # psql -U dbusername -W
-
-## create dbs
 # psql
 # alter user "dbusername" with password 'pass';
 # grant all privileges on database "datadbname" to "dbusername";

@@ -1,46 +1,44 @@
 #!/bin/bash
+# Мои скрипты автоматизации (pyinfra).
+# Использование: sudo ./zaebis.sh {base|desktop|server|science|personal}
+# Второй параметр "test" — не делать git pull.
 
-if [ $UID != 0 ]; then
-        echo "you need to be root"
-        exit
+set -e
+
+if [ "$(id -u)" != 0 ]; then
+    echo "you need to be root"
+    exit 1
 fi
 source /etc/profile
 
-if [ -n "`which apt-get`" ]; then apt-get -y install git ansible;
-elif [ -n "`which pacman`" ]; then pacman -Sy --needed --noconfirm git ansible; fi
+VENV=/opt/pyinfra
+if [ ! -x "$VENV/bin/pyinfra" ]; then
+    if command -v apt-get > /dev/null; then
+        apt-get -y install git python3-venv
+    elif command -v pacman > /dev/null; then
+        pacman -Sy --needed --noconfirm git
+    fi
+    python3 -m venv "$VENV"
+    "$VENV/bin/pip" install --upgrade pyinfra
+fi
 
-if [ -d ".git" ]; then
-    echo "we are inside git repo"
-else
-    echo $?
+if [ ! -d ".git" ]; then
     echo "we are not inside git repo, clone and CD"
     git clone https://github.com/vit1-irk/lazyinstall-puppet
     cd lazyinstall-puppet
 fi
 
-if [ "$2" = "test" ]; then
-    echo "test case, not doing git pull"
-else
+if [ "$2" != "test" ]; then
     git pull
 fi
 
-cd playbooks
+PYINFRA="$VENV/bin/pyinfra"
 
-ansible-playbook everywhere.yaml
-ansible-playbook archlinuxcn.yaml
-
-if [ "$1" = "desktop" ]; then
-    ansible-playbook desktop.yaml
-fi
-
-if [ "$1" = "server" ]; then
-    ansible-playbook server.yaml
-fi
-
-if [ "$1" = "science" ]; then
-    ansible-playbook science.yaml
-fi
-
-if [ "$1" = "personal" ]; then
-    ansible-playbook personal1.yaml
-fi
+case "$1" in
+    base)     exec "$PYINFRA" @local deploy/base.py ;;
+    desktop)  exec "$PYINFRA" @local deploy/desktop.py ;;
+    server)   exec "$PYINFRA" @local deploy/server.py ;;
+    science)  exec "$PYINFRA" @local deploy/science.py ;;
+    personal) exec ./sensitive.sh ;;
+    *)        echo "usage: sudo ./zaebis.sh {base|desktop|server|science|personal} [test]"; exit 1 ;;
+esac
